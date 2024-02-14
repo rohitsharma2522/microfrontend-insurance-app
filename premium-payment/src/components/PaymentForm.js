@@ -37,9 +37,7 @@ const PaymentForm = () => {
     const mergedDataJSON = JSON.stringify(mergedRecords);
     localStorage.setItem('policyDetails', mergedDataJSON);
 
-    // setTimeout(() => {
-    //     setIsLoading(false);
-    // }, 2000);
+
   }
   useEffect(() => {
     window.addEventListener('POLICY_DETAILS', (customEvent) => {
@@ -74,7 +72,20 @@ const PaymentForm = () => {
     }
     setPremiumAmount(newValue);
   }
-
+  
+  const executeWorker = () => {
+    const worker = new Worker('./webworker/worker.js')
+     worker.onmessage = function (event) {
+         worker.terminate();
+       };
+    
+       if (worker) {
+         worker.postMessage(5); 
+       }
+       return () => {
+        worker.terminate();
+       };
+   }
   return (
     <>
     <div className="payment-form">

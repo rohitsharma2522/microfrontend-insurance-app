@@ -4,7 +4,7 @@ const Dotenv = require('dotenv-webpack');
 const deps = require("./package.json").dependencies;
 module.exports = (_, argv) => ({
   output: {
-    publicPath: "http://localhost:3000/",
+    publicPath: argv.mode === "development"? "http://localhost:3000/":"https://rs-insurance.netlify.app/"
   },
 
   resolve: {
@@ -44,8 +44,8 @@ module.exports = (_, argv) => ({
       name: "container",
       filename: "remoteEntry.js",
       remotes: {
-        premium_payment: "premium_payment@http://localhost:3002/remoteEntry.js",
-        insurance_details: "insurance_details@http://localhost:3001/remoteEntry.js",
+        premium_payment: "premium_payment@https://rs-insurance-app2.netlify.app/remoteEntry.js",
+        insurance_details: "insurance_details@https://rs-insurance-app1.netlify.app/remoteEntry.js",
       },
       exposes: {},
       shared: {
